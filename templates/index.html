@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block body %}
+
+    <div class="container">
+        <h2>Add a Todo</h2>
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="title">Todo Title</label>
+                <input type="text" name="title" id="title">
+            </div>
+            <div class="form-group">
+                <label for="desc">Todo Description</label>
+                <input type="text" name="desc" id="desc">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Your Todos</h2>
+        {% if allTodo|length == 0 %}
+            <div class="alert">No Todos found. Add your first todo now!</div>
+        {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>SNo</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in allTodo %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.desc }}</td>
+                        <td>{{ todo.date_created }}</td>
+                        <td>
+                            <a href="/update/{{ todo.sno }}" class="btn">Update</a>
+                            <a href="/delete/{{ todo.sno }}" class="btn delete-btn">Delete</a>
+                        </td>                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+{% endblock body %}
